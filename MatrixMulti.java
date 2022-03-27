@@ -20,14 +20,17 @@ public class MatrixMulti
 
         System.out.println("Matrix 1");
         printMatrix(matrix1);
+        System.out.println();
 
         System.out.println("Matrix 2");
         printMatrix(matrix2);
+        System.out.println();
 
         matrixProduct = strassen(matrix1, matrix2);
 
         System.out.println("Product of Matrix 1 and Matrix 2");
         printMatrix(matrixProduct);
+        System.out.println();
     }
 
     /*** Builds Random Matrix ***/
@@ -63,52 +66,6 @@ public class MatrixMulti
     }
 
     /*** Strassen's Algorithm ***/
-    public static int[][][] strassenSplit(int[][] mat)
-    {
-        int row = mat.length;
-        int col = mat.length;
-
-        int rowDiv = row/2;
-        int colDiv = col/2;
-
-        int[][] newMatA = new int[rowDiv][colDiv];
-        int[][] newMatB = new int[rowDiv][colDiv];
-        int[][] newMatC = new int[rowDiv][colDiv];
-        int[][] newMatD = new int[rowDiv][colDiv];
-
-        for (int i = 0; i < rowDiv; i++)
-        {
-            for (int j = 0; j < colDiv; j++)
-            {
-                newMatA[i][j] = mat[i][j];                  //Top left quadrant
-                newMatB[i][j] = mat[i][j + colDiv];         //Top right quadrant
-                newMatC[i][j] = mat[i + rowDiv][j];         //Bottom left quadrant
-                newMatD[i][j] = mat[i + rowDiv][j + colDiv];//Bottom right quadrant
-            }
-        }
-
-        int[][][] matArray = {newMatA, newMatB, newMatC, newMatD};
-
-        return matArray;
-    }
-
-    //Adding the product of 2 matricies together
-    public static int[][] strassenAdd(int[][] matA, int[][] matB)
-    {
-        int matSize = matA.length;
-        int[][] matSum = new int[matSize][matSize];
-
-        for (int i = 0; i < matSize; i++)
-        {
-            for (int j = 0; j < matSize; j++)
-            {
-                matSum[i][j] = matA[i][j] + matB[i][j];
-            }
-        }
-
-        return matSum;
-    }
-
     public static int[][] strassen(int[][] matA, int[][] matB)
     {
         int matSize = matA.length;
@@ -155,7 +112,98 @@ public class MatrixMulti
         int[][] matC21 = strassenAdd(matA3B1, matA4B3);
         int[][] matC22 = strassenAdd(matA3B2, matA4B4);
 
+        matC = strassenJoin(matC11, matC12, matC21, matC22);
 
         return matC;
+    }
+
+    //Splits the matrix up
+    public static int[][][] strassenSplit(int[][] mat)
+    {
+        int row = mat.length;
+        int col = mat.length;
+
+        int rowDiv = row/2;
+        int colDiv = col/2;
+
+        int[][] newMatA = new int[rowDiv][colDiv];
+        int[][] newMatB = new int[rowDiv][colDiv];
+        int[][] newMatC = new int[rowDiv][colDiv];
+        int[][] newMatD = new int[rowDiv][colDiv];
+
+        for (int i = 0; i < rowDiv; i++)
+        {
+            for (int j = 0; j < colDiv; j++)
+            {
+                newMatA[i][j] = mat[i][j];                  //Top left quadrant
+                newMatB[i][j] = mat[i][j + colDiv];         //Top right quadrant
+                newMatC[i][j] = mat[i + rowDiv][j];         //Bottom left quadrant
+                newMatD[i][j] = mat[i + rowDiv][j + colDiv];//Bottom right quadrant
+            }
+        }
+
+        int[][][] matArray = {newMatA, newMatB, newMatC, newMatD};
+
+        return matArray;
+    }
+
+    //Joins the matrix back together
+    public static int[][] strassenJoin(int[][] matA, int[][] matB, int[][] matC, int[][] matD)
+    {
+        int matHalf = matA.length;
+        int matFullSize = matHalf * 2;
+
+        int[][] matFull = new int[matFullSize][matFullSize];
+
+        for (int row = 0; row < matFullSize; row++)
+        {
+            if (row < matHalf)
+            {
+                for (int col = 0; col < matFullSize; col++)
+                {
+                    if (col < matHalf)
+                    {
+                        matFull[row][col] = matA[row][col];
+                    }
+                    else
+                    {
+                        matFull[row][col] = matB[row][col - matHalf];
+                    }
+                }
+            }
+            else
+            {
+                for (int col = 0; col < matFullSize; col++)
+                {
+                    if (col < matHalf)
+                    {
+                        matFull[row][col] = matC[row - matHalf][col];
+                    }
+                    else
+                    {
+                        matFull[row][col] = matD[row - matHalf][col - matHalf];
+                    }
+                }
+            }
+        }
+
+        return matFull;
+    }
+
+    //Adding the product of 2 matricies together
+    public static int[][] strassenAdd(int[][] matA, int[][] matB)
+    {
+        int matSize = matA.length;
+        int[][] matSum = new int[matSize][matSize];
+
+        for (int i = 0; i < matSize; i++)
+        {
+            for (int j = 0; j < matSize; j++)
+            {
+                matSum[i][j] = matA[i][j] + matB[i][j];
+            }
+        }
+
+        return matSum;
     }
 }
