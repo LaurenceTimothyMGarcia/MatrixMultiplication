@@ -54,19 +54,35 @@ public class MatrixMulti
             }
             System.out.println();
         }
+
     }
 
     /*** Strassen's Algorithm ***/
-    public int[][] strassenSolve(int[][] matA, int[][] matB)
+    public int[][] strassenSplit(int[][] mat)
     {
-        
+        int row = mat.length;
+        int col = mat.length;
+
+        int rowDiv = row/2;
+        int colDiv = col/2;
+
+        int[][] mat1 = new int[rowDiv][colDiv];
+
+        for (int i = 0; i < mat.length; i++)
+        {
+            
+        }
+
+        return mat1;
     }
 
     public int[][] strassenDiv(int[][] matA, int[][] matB)
     {
         if (matA.length <= 2)
         {
-            return 
+            
         }
+
+
     }
 }
