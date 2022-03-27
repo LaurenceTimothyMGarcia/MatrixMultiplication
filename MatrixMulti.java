@@ -13,7 +13,7 @@ public class MatrixMulti
         int[][] matrix1 = new int[4][4];
         int[][] matrix2 = new int[4][4];
 
-        int[][] matrixProduct;
+        int[][] matrixProduct = new int[4][4];
 
         matrix1 = buildMatrix(matrix1);
         matrix2 = buildMatrix(matrix2);
@@ -30,9 +30,9 @@ public class MatrixMulti
     {
         Random rand = new Random();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < matrix.length; i++)
         {
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < matrix.length; j++)
             {
                 matrix[i][j] = rand.nextInt(10);
             }
@@ -56,5 +56,17 @@ public class MatrixMulti
         }
     }
 
+    /*** Strassen's Algorithm ***/
+    public int[][] strassenSolve(int[][] matA, int[][] matB)
+    {
+        
+    }
 
+    public int[][] strassenDiv(int[][] matA, int[][] matB)
+    {
+        if (matA.length <= 2)
+        {
+            return 
+        }
+    }
 }
