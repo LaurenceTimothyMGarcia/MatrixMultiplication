@@ -1,10 +1,9 @@
-import java.lang.reflect.Array;
-
 //Laurence Timothy M. Garcia
 //CS 3310.01
 //Professor Huong Luu
 //Project 1 - Matrix Multiplication
 
+import java.io.*;
 import java.util.Random;
 
 public class MatrixMulti
@@ -18,6 +17,9 @@ public class MatrixMulti
 
         matrix1 = buildMatrix(matrix1);
         matrix2 = buildMatrix(matrix2);
+
+        printMatrix(matrix1);
+        printMatrix(matrix2);
     }
 
     public static int[][] buildMatrix(int[][] matrix)
@@ -29,11 +31,23 @@ public class MatrixMulti
             for (int j = 0; j < 4; j++)
             {
                 matrix[i][j] = rand.nextInt(10);
-                System.out.print(matrix[i][i] + " ");
             }
-            System.out.println();
         }
 
         return matrix;
+    }
+
+    public static void printMatrix(int[][] matrix)
+    {
+        System.out.println("Test Matrix");
+
+        for (int i = 0; i < matrix.length; i++)
+        {
+            for (int j = 0; j < matrix[i].length; j++)
+            {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
