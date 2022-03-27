@@ -20,7 +20,7 @@ public class MatrixMulti
         matrix2 = buildMatrix(matrix2);
     }
 
-    public int[][] buildMatrix(int[][] matrix)
+    public static int[][] buildMatrix(int[][] matrix)
     {
         Random rand = new Random();
 
@@ -29,10 +29,10 @@ public class MatrixMulti
             for (int j = 0; j < 4; j++)
             {
                 matrix[i][j] = rand.nextInt(10);
+                System.out.print(matrix[i][i] + " ");
             }
+            System.out.println();
         }
-
-        System.out.print(matrix);
 
         return matrix;
     }
