@@ -18,10 +18,14 @@ public class MatrixMulti
         matrix1 = buildMatrix(matrix1);
         matrix2 = buildMatrix(matrix2);
 
+        System.out.println("Matrix 1");
         printMatrix(matrix1);
+
+        System.out.println("Matrix 2");
         printMatrix(matrix2);
     }
 
+    /*** Builds Random Matrix ***/
     public static int[][] buildMatrix(int[][] matrix)
     {
         Random rand = new Random();
@@ -37,6 +41,7 @@ public class MatrixMulti
         return matrix;
     }
 
+    /*** Prints out Matrix ***/
     public static void printMatrix(int[][] matrix)
     {
         System.out.println("Test Matrix");
@@ -50,4 +55,6 @@ public class MatrixMulti
             System.out.println();
         }
     }
+
+
 }
