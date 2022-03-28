@@ -68,7 +68,17 @@ public class MatrixMulti
 
 
         /** Naive Divide and Conquer Algorithm **/
+        //Expanding Matrix to be used by Strassen and DnQ
+        matrix1 = rebuildMatrix(matrix1);
+        matrix2 = rebuildMatrix(matrix2);
+
         matrixProductDQ = divNCon(matrix1, matrix2);
+
+        //Cleans up product matrix into its original size
+        if (matrixSize != matrix1.length)
+        {
+            matrixProductDQ = reduceMatrix(matrixProductDQ, matrixSize);
+        }
 
         //prints out Naive Divide and Conquer Algorithm
         System.out.println("Naive Divide and Conquer");
@@ -78,10 +88,6 @@ public class MatrixMulti
 
 
         /** Strassen's Algorithm **/
-        //Expanding Matrix to be used by Strassen
-        matrix1 = rebuildMatrix(matrix1);
-        matrix2 = rebuildMatrix(matrix2);
-
         //calculation for multiplying first and second matrix
         matrixProductStrassen = strassen(matrix1, matrix2);
 
@@ -312,23 +318,19 @@ public class MatrixMulti
         int[][] matB4 = matBSplit[3];
 
         //Recursively calling Strassen to continue breaking down the problem to 1x1 matrix
-        int[][] matA1B1 = strassen(matA1, matB1);
-        int[][] matA2B3 = strassen(matA2, matB3);
-
-        int[][] matA1B2 = strassen(matA1, matB2);
-        int[][] matA2B4 = strassen(matA2, matB4);
-
-        int[][] matA3B1 = strassen(matA3, matB1);
-        int[][] matA4B3 = strassen(matA4, matB3);
-
-        int[][] matA3B2 = strassen(matA3, matB2);
-        int[][] matA4B4 = strassen(matA4, matB4);
+        int[][] p1 = strassen(add(matA1, matA4), add(matB1, matB4));
+        int[][] p2 = strassen(matA4, sub(matB3, matB1));
+        int[][] p3 = strassen(add(matA1, matA2), matB3);
+        int[][] p4 = strassen(sub(matA2, matA4), add(matB3, matB4));
+        int[][] p5 = strassen(matA1, sub(matB2, matB4));
+        int[][] p6 = strassen(add(matA3, matA4), matB1);
+        int[][] p7 = strassen(sub(matA1, matA3), add(matB1, matB2));
 
         //Adding the products together
-        int[][] matC11 = add(matA1B1, matA2B3);
-        int[][] matC12 = add(matA1B2, matA2B4);
-        int[][] matC21 = add(matA3B1, matA4B3);
-        int[][] matC22 = add(matA3B2, matA4B4);
+        int[][] matC11 = sub(add(p1, p2), add(p3, p4));
+        int[][] matC12 = add(p5, p3);
+        int[][] matC21 = add(p6, p2);
+        int[][] matC22 = sub(add(p5, p1), sub(p6, p7));
 
         //Pieces the Matrix back together
         matC = join(matC11, matC12, matC21, matC22);
@@ -424,5 +426,22 @@ public class MatrixMulti
         }
 
         return matSum;
+    }
+
+    //Subtracting product of two matrices
+    public static int[][] sub(int[][] matA, int[][] matB)
+    {
+        int matSize = matA.length;
+        int[][] matDiff = new int[matSize][matSize];
+
+        for (int i = 0; i < matSize; i++)
+        {
+            for (int j = 0; j < matSize; j++)
+            {
+                matDiff[i][j] = matA[i][j] - matB[i][j];
+            }
+        }
+
+        return matDiff;
     }
 }
