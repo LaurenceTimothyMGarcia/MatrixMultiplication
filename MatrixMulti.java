@@ -18,7 +18,9 @@ public class MatrixMulti
         int[][] matrix1 = new int[matrixSize][matrixSize];
         int[][] matrix2 = new int[matrixSize][matrixSize];
 
-        int[][] matrixProduct = new int[matrixSize][matrixSize];
+        int[][] matrixProductBF = new int[matrixSize][matrixSize];
+        int[][] matrixProductDQ = new int[matrixSize][matrixSize];
+        int[][] matrixProductStrassen = new int[matrixSize][matrixSize];
 
         //Asks user to build matrix or create a random one
         System.out.print("Would you like to input a matrix or build a random one (1 for build, 2 for random): ");
@@ -41,33 +43,48 @@ public class MatrixMulti
             matrix2 = buildRandomMatrix(matrix2);
         }
 
-        
-        
+        System.out.println("Matrices being multiplied");
 
         //prints out the first matrix
         System.out.println("Matrix 1");
         printMatrix(matrix1);
-        matrix1 = rebuildMatrix(matrix1);
         System.out.println();
 
         //prints out the second matrix
         System.out.println("Matrix 2");
         printMatrix(matrix2);
-        matrix2 = rebuildMatrix(matrix2);
+        System.out.println();
+        
+
+        /** Brute Force **/
+        //Multiplies Matrices by brute force
+        matrixProductBF = bruteForce(matrix1, matrix2, matrixProductBF);
+
+        //prints out brute force product
+        System.out.println("Brute Force Algorithm");
+        System.out.println("Product of Matrix 1 and Matrix 2");
+        printMatrix(matrixProductBF);
         System.out.println();
 
+
+        /** Strassen's Algorithm **/
+        //Expanding Matrix to be used by Strassen
+        matrix1 = rebuildMatrix(matrix1);
+        matrix2 = rebuildMatrix(matrix2);
+
         //calculation for multiplying first and second matrix
-        matrixProduct = strassen(matrix1, matrix2);
+        matrixProductStrassen = strassen(matrix1, matrix2);
 
         //Cleans up product matrix into its original size
         if (matrixSize != matrix1.length)
         {
-            matrixProduct = reduceMatrix(matrixProduct, matrixSize);
+            matrixProductStrassen = reduceMatrix(matrixProductStrassen, matrixSize);
         }
 
         //prints product of matrix
+        System.out.println("Strassen's Algorithm");
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProduct);
+        printMatrix(matrixProductStrassen);
         System.out.println();
     }
 
@@ -179,6 +196,26 @@ public class MatrixMulti
             System.out.println();
         }
 
+    }
+
+    /*** Brute Force ***/
+    public static int[][] bruteForce(int[][] mat1, int[][] mat2, int[][] mat3)
+    {
+        int matSize = mat1.length;
+
+        for (int i = 0; i < matSize; i++)
+        {
+            for (int j = 0; j < matSize; j++)
+            {
+                mat3[i][j] = 0;
+                for (int k = 0; k < matSize; k++)
+                {
+                    mat3[i][j] += mat1[i][k] * mat2[k][j];
+                }
+            }
+        }
+
+        return mat3;
     }
 
     /*** Strassen's Algorithm ***/
@@ -307,7 +344,7 @@ public class MatrixMulti
         return matFull;
     }
 
-    //Adding the product of 2 matricies together
+    //Adding the product of 2 matrices together
     public static int[][] strassenAdd(int[][] matA, int[][] matB)
     {
         int matSize = matA.length;
