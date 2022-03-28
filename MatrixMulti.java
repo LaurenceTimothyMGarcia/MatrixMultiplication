@@ -18,21 +18,43 @@ public class MatrixMulti
         int[][] matrix1 = new int[matrixSize][matrixSize];
         int[][] matrix2 = new int[matrixSize][matrixSize];
 
-        int[][] matrixProduct = new int[4][4];
+        int[][] matrixProduct = new int[matrixSize][matrixSize];
 
-        matrix1 = buildRandomMatrix(matrix1);
-        matrix2 = buildRandomMatrix(matrix2);
+        //Asks user to build matrix or create a random one
+        System.out.print("Would you like to input a matrix or build a random one (1 for build, 2 for random): ");
+        int choice = kb.nextInt();
 
+        while (!(choice == 1 || choice == 2))
+        {
+            System.out.print("Please choose 1 for build or 2 for random: ");
+            choice = kb.nextInt();
+        }
+
+        if (choice == 1)
+        {
+            matrix1 = buildMatrix(matrix1, kb);
+            matrix2 = buildMatrix(matrix2, kb);
+        }
+        else if (choice == 2)
+        {
+            matrix1 = buildRandomMatrix(matrix1);
+            matrix2 = buildRandomMatrix(matrix2);
+        }
+
+        //prints out the first matrix
         System.out.println("Matrix 1");
         printMatrix(matrix1);
         System.out.println();
 
+        //prints out the second matrix
         System.out.println("Matrix 2");
         printMatrix(matrix2);
         System.out.println();
 
+        //calculation for multiplying first and second matrix
         matrixProduct = strassen(matrix1, matrix2);
 
+        //prints product of matrix
         System.out.println("Product of Matrix 1 and Matrix 2");
         printMatrix(matrixProduct);
         System.out.println();
@@ -43,7 +65,7 @@ public class MatrixMulti
     {
         int input = 0;
 
-        System.out.println("Please place size of matrix that is multiple of 4, ie: 4, 8, 16: ");
+        System.out.println("Please place size of matrix that is multiple of 4, (ie 4, 8, 16): ");
         input = kb.nextInt();
 
         while (input%4 != 0)
@@ -53,6 +75,23 @@ public class MatrixMulti
         }
 
         return input;
+    }
+
+    /*** Allows user to build their own matrix ***/
+    public static int[][] buildMatrix(int[][] matrix, Scanner kb)
+    {
+        System.out.println();
+        System.out.println("Input matrix");
+        for (int i = 0; i < matrix.length; i++)
+        {
+            for (int j = 0; j < matrix.length; j++)
+            {
+                System.out.printf("Matrix [%d][%d]: ", i, j);
+                matrix[i][j] = kb.nextInt();
+            }
+        }
+
+        return matrix;
     }
 
     /*** Builds Random Matrix ***/
@@ -74,8 +113,6 @@ public class MatrixMulti
     /*** Prints out Matrix ***/
     public static void printMatrix(int[][] matrix)
     {
-        System.out.println("Test Matrix");
-
         for (int i = 0; i < matrix.length; i++)
         {
             for (int j = 0; j < matrix[i].length; j++)
