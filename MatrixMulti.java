@@ -41,21 +41,29 @@ public class MatrixMulti
             matrix2 = buildRandomMatrix(matrix2);
         }
 
-        matrix1 = rebuildMatrix(matrix1);
-        matrix2 = rebuildMatrix(matrix2);
+        
+        
 
         //prints out the first matrix
         System.out.println("Matrix 1");
         printMatrix(matrix1);
+        matrix1 = rebuildMatrix(matrix1);
         System.out.println();
 
         //prints out the second matrix
         System.out.println("Matrix 2");
         printMatrix(matrix2);
+        matrix2 = rebuildMatrix(matrix2);
         System.out.println();
 
         //calculation for multiplying first and second matrix
         matrixProduct = strassen(matrix1, matrix2);
+
+        //Cleans up product matrix into its original size
+        if (matrixSize != matrix1.length)
+        {
+            matrixProduct = reduceMatrix(matrixProduct, matrixSize);
+        }
 
         //prints product of matrix
         System.out.println("Product of Matrix 1 and Matrix 2");
@@ -68,14 +76,8 @@ public class MatrixMulti
     {
         int input = 0;
 
-        System.out.println("Please place size of matrix that is a power of 2, (ie 2, 4, 8, 16): ");
+        System.out.println("Please place size of matrix: ");
         input = kb.nextInt();
-
-        /*while ((Math.log(input) % Math.log(2)) != 0)
-        {
-            System.out.println("Input is not a power of 2, please try again: ");
-            input = kb.nextInt();
-        }*/
 
         return input;
     }
@@ -152,7 +154,17 @@ public class MatrixMulti
     /*** Reduces size of the rebuilt matrix down to the original size ***/
     public static int[][] reduceMatrix(int[][] matrix, int ogSize)
     {
-        
+        int[][] newMatrix = new int[ogSize][ogSize];
+
+        for (int i = 0; i < ogSize; i++)
+        {
+            for (int j = 0; j < ogSize; j++)
+            {
+                newMatrix[i][j] = matrix[i][j];
+            }
+        }
+
+        return newMatrix;
     }
 
     /*** Prints out Matrix ***/
