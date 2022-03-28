@@ -129,6 +129,8 @@ public class MatrixMulti
             }
         }
 
+        System.out.println();
+
         return matrix;
     }
 
