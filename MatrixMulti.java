@@ -4,19 +4,24 @@
 //Project 1 - Matrix Multiplication
 
 import java.io.*;
+import java.util.Scanner;
 import java.util.Random;
 
 public class MatrixMulti
 {
     public static void main(String[] args)
     {
-        int[][] matrix1 = new int[4][4];
-        int[][] matrix2 = new int[4][4];
+        Scanner kb = new Scanner(System.in);
+
+        int matrixSize = keyboardInput(kb);
+
+        int[][] matrix1 = new int[matrixSize][matrixSize];
+        int[][] matrix2 = new int[matrixSize][matrixSize];
 
         int[][] matrixProduct = new int[4][4];
 
-        matrix1 = buildMatrix(matrix1);
-        matrix2 = buildMatrix(matrix2);
+        matrix1 = buildRandomMatrix(matrix1);
+        matrix2 = buildRandomMatrix(matrix2);
 
         System.out.println("Matrix 1");
         printMatrix(matrix1);
@@ -33,8 +38,25 @@ public class MatrixMulti
         System.out.println();
     }
 
+    /*** Input + Validation ***/
+    public static int keyboardInput(Scanner kb)
+    {
+        int input = 0;
+
+        System.out.println("Please place size of matrix that is multiple of 4, ie: 4, 8, 16: ");
+        input = kb.nextInt();
+
+        while (input%4 != 0)
+        {
+            System.out.println("Input is not a multiple of 4, please try again: ");
+            input = kb.nextInt();
+        }
+
+        return input;
+    }
+
     /*** Builds Random Matrix ***/
-    public static int[][] buildMatrix(int[][] matrix)
+    public static int[][] buildRandomMatrix(int[][] matrix)
     {
         Random rand = new Random();
 
@@ -112,6 +134,7 @@ public class MatrixMulti
         int[][] matC21 = strassenAdd(matA3B1, matA4B3);
         int[][] matC22 = strassenAdd(matA3B2, matA4B4);
 
+        //Pieces the Matrix back together
         matC = strassenJoin(matC11, matC12, matC21, matC22);
 
         return matC;
