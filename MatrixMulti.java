@@ -65,12 +65,12 @@ public class MatrixMulti
     {
         int input = 0;
 
-        System.out.println("Please place size of matrix that is multiple of 4, (ie 4, 8, 16): ");
+        System.out.println("Please place size of matrix that is a power of 2, (ie 2, 4, 8, 16): ");
         input = kb.nextInt();
 
-        while (input%4 != 0)
+        while ((Math.log(input) % Math.log(2)) != 0)
         {
-            System.out.println("Input is not a multiple of 4, please try again: ");
+            System.out.println("Input is not a power of 2, please try again: ");
             input = kb.nextInt();
         }
 
