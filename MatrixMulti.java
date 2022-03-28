@@ -41,6 +41,9 @@ public class MatrixMulti
             matrix2 = buildRandomMatrix(matrix2);
         }
 
+        matrix1 = rebuildMatrix(matrix1);
+        matrix2 = rebuildMatrix(matrix2);
+
         //prints out the first matrix
         System.out.println("Matrix 1");
         printMatrix(matrix1);
@@ -68,11 +71,11 @@ public class MatrixMulti
         System.out.println("Please place size of matrix that is a power of 2, (ie 2, 4, 8, 16): ");
         input = kb.nextInt();
 
-        while ((Math.log(input) % Math.log(2)) != 0)
+        /*while ((Math.log(input) % Math.log(2)) != 0)
         {
             System.out.println("Input is not a power of 2, please try again: ");
             input = kb.nextInt();
-        }
+        }*/
 
         return input;
     }
@@ -108,6 +111,48 @@ public class MatrixMulti
         }
 
         return matrix;
+    }
+
+    /*** Rebuild Matrix for non power of 2 ***/
+    public static int[][] rebuildMatrix(int[][] matrix)
+    {
+        int ogSize = matrix.length;
+        int[][] newMatrix;
+
+        if ((Math.log(ogSize) % Math.log(2)) != 0)
+        {
+            double power = Math.ceil(Math.log(ogSize) / Math.log(2));
+            int newSize = (int)Math.pow(2, power);
+
+            newMatrix = new int[newSize][newSize];
+
+            for (int i = 0; i < newSize; i++)
+            {
+                for (int j = 0; j < newSize; j++)
+                {
+                    if (j >= ogSize || i >= ogSize)
+                    {
+                        newMatrix[i][j] = 0;
+                    }
+                    else
+                    {
+                        newMatrix[i][j] = matrix[i][j];
+                    }
+                }
+            }
+        }
+        else
+        {
+            return matrix;
+        }
+
+        return newMatrix;
+    }
+
+    /*** Reduces size of the rebuilt matrix down to the original size ***/
+    public static int[][] reduceMatrix(int[][] matrix, int ogSize)
+    {
+        
     }
 
     /*** Prints out Matrix ***/
