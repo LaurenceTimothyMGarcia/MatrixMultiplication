@@ -54,7 +54,7 @@ public class MatrixMulti
         System.out.println("Matrix 2");
         printMatrix(matrix2);
         System.out.println();
-        
+
 
         /** Brute Force **/
         //Multiplies Matrices by brute force
@@ -64,6 +64,16 @@ public class MatrixMulti
         System.out.println("Brute Force Algorithm");
         System.out.println("Product of Matrix 1 and Matrix 2");
         printMatrix(matrixProductBF);
+        System.out.println();
+
+
+        /** Naive Divide and Conquer Algorithm **/
+        matrixProductDQ = divNCon(matrix1, matrix2);
+
+        //prints out Naive Divide and Conquer Algorithm
+        System.out.println("Naive Divide and Conquer");
+        System.out.println("Product of Matrix 1 and Matrix 2");
+        printMatrix(matrixProductDQ);
         System.out.println();
 
 
@@ -218,6 +228,61 @@ public class MatrixMulti
         return mat3;
     }
 
+
+    /*** Naive Divide and Conquer ***/
+    public static int[][] divNCon(int[][] matA, int[][] matB)
+    {
+        int matSize = matA.length;
+
+        int [][] matC = new int[matSize][matSize];
+
+        if (matSize <= 1)
+        {
+            matC[0][0] = matA[0][0] * matB[0][0];
+            return matC;
+        }
+
+        //Splits the matrix into quadrants and returns as 3d array
+        int[][][] matASplit = split(matA);
+        int[][][] matBSplit = split(matB);
+
+        //Takes the array and places into matrix variables
+        int[][] matA1 = matASplit[0];
+        int[][] matA2 = matASplit[1];
+        int[][] matA3 = matASplit[2];
+        int[][] matA4 = matASplit[3];
+
+        int[][] matB1 = matBSplit[0];
+        int[][] matB2 = matBSplit[1];
+        int[][] matB3 = matBSplit[2];
+        int[][] matB4 = matBSplit[3];
+
+        //Recursively calling Strassen to continue breaking down the problem to 1x1 matrix
+        int[][] matA1B1 = divNCon(matA1, matB1);
+        int[][] matA2B3 = divNCon(matA2, matB3);
+
+        int[][] matA1B2 = divNCon(matA1, matB2);
+        int[][] matA2B4 = divNCon(matA2, matB4);
+
+        int[][] matA3B1 = divNCon(matA3, matB1);
+        int[][] matA4B3 = divNCon(matA4, matB3);
+
+        int[][] matA3B2 = divNCon(matA3, matB2);
+        int[][] matA4B4 = divNCon(matA4, matB4);
+
+        //Adding the products together
+        int[][] matC11 = add(matA1B1, matA2B3);
+        int[][] matC12 = add(matA1B2, matA2B4);
+        int[][] matC21 = add(matA3B1, matA4B3);
+        int[][] matC22 = add(matA3B2, matA4B4);
+
+        //Pieces the Matrix back together
+        matC = join(matC11, matC12, matC21, matC22);
+
+        return matC;
+    }
+
+
     /*** Strassen's Algorithm ***/
     public static int[][] strassen(int[][] matA, int[][] matB)
     {
@@ -232,8 +297,8 @@ public class MatrixMulti
         }
 
         //Splits the matrix into quadrants and returns as 3d array
-        int[][][] matASplit = strassenSplit(matA);
-        int[][][] matBSplit = strassenSplit(matB);
+        int[][][] matASplit = split(matA);
+        int[][][] matBSplit = split(matB);
 
         //Takes the array and places into matrix variables
         int[][] matA1 = matASplit[0];
@@ -260,19 +325,19 @@ public class MatrixMulti
         int[][] matA4B4 = strassen(matA4, matB4);
 
         //Adding the products together
-        int[][] matC11 = strassenAdd(matA1B1, matA2B3);
-        int[][] matC12 = strassenAdd(matA1B2, matA2B4);
-        int[][] matC21 = strassenAdd(matA3B1, matA4B3);
-        int[][] matC22 = strassenAdd(matA3B2, matA4B4);
+        int[][] matC11 = add(matA1B1, matA2B3);
+        int[][] matC12 = add(matA1B2, matA2B4);
+        int[][] matC21 = add(matA3B1, matA4B3);
+        int[][] matC22 = add(matA3B2, matA4B4);
 
         //Pieces the Matrix back together
-        matC = strassenJoin(matC11, matC12, matC21, matC22);
+        matC = join(matC11, matC12, matC21, matC22);
 
         return matC;
     }
 
     //Splits the matrix up
-    public static int[][][] strassenSplit(int[][] mat)
+    public static int[][][] split(int[][] mat)
     {
         int row = mat.length;
         int col = mat.length;
@@ -302,7 +367,7 @@ public class MatrixMulti
     }
 
     //Joins the matrix back together
-    public static int[][] strassenJoin(int[][] matA, int[][] matB, int[][] matC, int[][] matD)
+    public static int[][] join(int[][] matA, int[][] matB, int[][] matC, int[][] matD)
     {
         int matHalf = matA.length;
         int matFullSize = matHalf * 2;
@@ -345,7 +410,7 @@ public class MatrixMulti
     }
 
     //Adding the product of 2 matrices together
-    public static int[][] strassenAdd(int[][] matA, int[][] matB)
+    public static int[][] add(int[][] matA, int[][] matB)
     {
         int matSize = matA.length;
         int[][] matSum = new int[matSize][matSize];
