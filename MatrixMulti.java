@@ -318,19 +318,19 @@ public class MatrixMulti
         int[][] matB4 = matBSplit[3];
 
         //Recursively calling Strassen to continue breaking down the problem to 1x1 matrix
-        int[][] p1 = strassen(add(matA1, matA4), add(matB1, matB4));
-        int[][] p2 = strassen(matA4, sub(matB3, matB1));
-        int[][] p3 = strassen(add(matA1, matA2), matB3);
-        int[][] p4 = strassen(sub(matA2, matA4), add(matB3, matB4));
-        int[][] p5 = strassen(matA1, sub(matB2, matB4));
-        int[][] p6 = strassen(add(matA3, matA4), matB1);
+        int[][] p1 = strassen(matA1, sub(matB2, matB4));
+        int[][] p2 = strassen(add(matA1, matA2), matB4);
+        int[][] p3 = strassen(add(matA3, matA4), matB1);
+        int[][] p4 = strassen(matA4, sub(matB3, matB1));
+        int[][] p5 = strassen(add(matA1, matA4), add(matB1, matB4));
+        int[][] p6 = strassen(sub(matA2, matA4), add(matB3, matB4));
         int[][] p7 = strassen(sub(matA1, matA3), add(matB1, matB2));
 
         //Adding the products together
-        int[][] matC11 = sub(add(p1, p2), add(p3, p4));
-        int[][] matC12 = add(p5, p3);
-        int[][] matC21 = add(p6, p2);
-        int[][] matC22 = sub(add(p5, p1), sub(p6, p7));
+        int[][] matC11 = add(sub(p4, p2), add(p5, p6));
+        int[][] matC12 = add(p1, p2);
+        int[][] matC21 = add(p3, p4);
+        int[][] matC22 = add(sub(p1, p3), sub(p5, p7));
 
         //Pieces the Matrix back together
         matC = join(matC11, matC12, matC21, matC22);
