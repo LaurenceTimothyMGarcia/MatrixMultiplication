@@ -11,10 +11,12 @@ public class MatrixMulti
 {
     public static void main(String[] args)
     {
+        //Keyboard Input
         Scanner kb = new Scanner(System.in);
 
         int matrixSize = keyboardInput(kb);
 
+        //Matrix related variables
         int[][] matrix1 = new int[matrixSize][matrixSize];
         int[][] matrix2 = new int[matrixSize][matrixSize];
 
@@ -47,12 +49,12 @@ public class MatrixMulti
 
         //prints out the first matrix
         System.out.println("Matrix 1");
-        printMatrix(matrix1);
+        //printMatrix(matrix1);
         System.out.println();
 
         //prints out the second matrix
         System.out.println("Matrix 2");
-        printMatrix(matrix2);
+        //printMatrix(matrix2);
         System.out.println();
 
 
@@ -63,7 +65,7 @@ public class MatrixMulti
         //prints out brute force product
         System.out.println("Brute Force Algorithm");
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductBF);
+        //printMatrix(matrixProductBF);
         System.out.println();
 
 
@@ -83,7 +85,7 @@ public class MatrixMulti
         //prints out Naive Divide and Conquer Algorithm
         System.out.println("Naive Divide and Conquer");
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductDQ);
+        //printMatrix(matrixProductDQ);
         System.out.println();
 
 
@@ -100,7 +102,7 @@ public class MatrixMulti
         //prints product of matrix
         System.out.println("Strassen's Algorithm");
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductStrassen);
+        //printMatrix(matrixProductStrassen);
         System.out.println();
     }
 
