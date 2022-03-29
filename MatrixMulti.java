@@ -16,6 +16,8 @@ public class MatrixMulti
 
         int matrixSize = keyboardInput(kb);
 
+        Stopwatch timer = new Stopwatch();
+
         //Matrix related variables
         int[][] matrix1 = new int[matrixSize][matrixSize];
         int[][] matrix2 = new int[matrixSize][matrixSize];
@@ -60,10 +62,13 @@ public class MatrixMulti
 
         /** Brute Force **/
         //Multiplies Matrices by brute force
+        timer.start();
         matrixProductBF = bruteForce(matrix1, matrix2, matrixProductBF);
+        timer.stop();
 
         //prints out brute force product
         System.out.println("Brute Force Algorithm");
+        System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductBF);
         System.out.println();
@@ -74,7 +79,9 @@ public class MatrixMulti
         matrix1 = rebuildMatrix(matrix1);
         matrix2 = rebuildMatrix(matrix2);
 
+        timer.start();
         matrixProductDQ = divNCon(matrix1, matrix2);
+        timer.stop();
 
         //Cleans up product matrix into its original size
         if (matrixSize != matrix1.length)
@@ -84,6 +91,7 @@ public class MatrixMulti
 
         //prints out Naive Divide and Conquer Algorithm
         System.out.println("Naive Divide and Conquer");
+        System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductDQ);
         System.out.println();
@@ -91,7 +99,9 @@ public class MatrixMulti
 
         /** Strassen's Algorithm **/
         //calculation for multiplying first and second matrix
+        timer.start();
         matrixProductStrassen = strassen(matrix1, matrix2);
+        timer.stop();
 
         //Cleans up product matrix into its original size
         if (matrixSize != matrix1.length)
@@ -101,6 +111,7 @@ public class MatrixMulti
 
         //prints product of matrix
         System.out.println("Strassen's Algorithm");
+        System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductStrassen);
         System.out.println();
