@@ -51,12 +51,12 @@ public class MatrixMulti
 
         //prints out the first matrix
         System.out.println("Matrix 1");
-        //printMatrix(matrix1);
+        printMatrix(matrix1);
         System.out.println();
 
         //prints out the second matrix
         System.out.println("Matrix 2");
-        //printMatrix(matrix2);
+        printMatrix(matrix2);
         System.out.println();
 
 
@@ -70,14 +70,24 @@ public class MatrixMulti
         System.out.println("Brute Force Algorithm");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        //printMatrix(matrixProductBF);
+        printMatrix(matrixProductBF);
         System.out.println();
 
 
         /** Naive Divide and Conquer Algorithm **/
         //Expanding Matrix to be used by Strassen and DnQ
+        timer.start();
         matrix1 = rebuildMatrix(matrix1);
+        timer.stop();
+        System.out.println("Rebuilding Matrix 1");
+        System.out.println(timer.toString());
+
+        timer.start();
         matrix2 = rebuildMatrix(matrix2);
+        timer.stop();
+        System.out.println("Rebuilding Matrix 2");
+        System.out.println(timer.toString());
+        System.out.println();
 
         timer.start();
         matrixProductDQ = divNCon(matrix1, matrix2);
@@ -93,7 +103,7 @@ public class MatrixMulti
         System.out.println("Naive Divide and Conquer");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        //printMatrix(matrixProductDQ);
+        printMatrix(matrixProductDQ);
         System.out.println();
 
 
@@ -113,7 +123,7 @@ public class MatrixMulti
         System.out.println("Strassen's Algorithm");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        //printMatrix(matrixProductStrassen);
+        printMatrix(matrixProductStrassen);
         System.out.println();
     }
 
@@ -169,8 +179,10 @@ public class MatrixMulti
         int ogSize = matrix.length;
         int[][] newMatrix;
 
+        //if else statement checks if the original size is already power of 2
         if ((Math.log(ogSize) % Math.log(2)) != 0)
         {
+            //Looks for the ceiling that is the power of 2 for a new matrix size
             double power = Math.ceil(Math.log(ogSize) / Math.log(2));
             int newSize = (int)Math.pow(2, power);
 
@@ -180,9 +192,10 @@ public class MatrixMulti
             {
                 for (int j = 0; j < newSize; j++)
                 {
+                    //If else statement compares whether if its in the original range or not
                     if (j >= ogSize || i >= ogSize)
                     {
-                        newMatrix[i][j] = 0;
+                        newMatrix[i][j] = 0;//adds zeros to the empty spaces if out of order
                     }
                     else
                     {
