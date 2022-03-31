@@ -391,6 +391,7 @@ public class MatrixMulti
             }
         }
 
+        //places in 3d array because it can hold 2d arrays
         int[][][] matArray = {newMatA, newMatB, newMatC, newMatD};
 
         return matArray;
@@ -406,10 +407,12 @@ public class MatrixMulti
 
         for (int row = 0; row < matFullSize; row++)
         {
+            //if else statement checks for whether it is the top or bottom halves
             if (row < matHalf)
             {
                 for (int col = 0; col < matFullSize; col++)
                 {
+                    //inner if else statement checks for left or right quadrant of the top half
                     if (col < matHalf)
                     {
                         matFull[row][col] = matA[row][col];
@@ -424,6 +427,7 @@ public class MatrixMulti
             {
                 for (int col = 0; col < matFullSize; col++)
                 {
+                    //inner if else statement checks for left or right quadrant of the bottom half
                     if (col < matHalf)
                     {
                         matFull[row][col] = matC[row - matHalf][col];
