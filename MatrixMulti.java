@@ -16,7 +16,9 @@ public class MatrixMulti
 
         int matrixSize = keyboardInput(kb);
 
-        Stopwatch timer = new Stopwatch();
+        //Stopwatch related variables
+        long start = 0;
+        long end = 0;
 
         //Matrix related variables
         int[][] matrix1 = new int[matrixSize][matrixSize];
@@ -62,13 +64,13 @@ public class MatrixMulti
 
         /** Brute Force **/
         //Multiplies Matrices by brute force
-        timer.start();
+        start = System.nanoTime();
         matrixProductBF = bruteForce(matrix1, matrix2, matrixProductBF);
-        timer.stop();
+        end = System.nanoTime();
 
         //prints out brute force product
         System.out.println("Brute Force Algorithm");
-        System.out.println(timer.toString());
+        System.out.println((double) ((end - start) / 1000000.0) + " Milliseconds");
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductBF);
         System.out.println();
@@ -76,22 +78,22 @@ public class MatrixMulti
 
         /** Naive Divide and Conquer Algorithm **/
         //Expanding Matrix to be used by Strassen and DnQ
-        timer.start();
+        start = System.nanoTime();
         matrix1 = rebuildMatrix(matrix1);
-        timer.stop();
+        end = System.nanoTime();
         System.out.println("Rebuilding Matrix 1");
-        System.out.println(timer.toString());
+        System.out.println((double) ((end - start) / 1000000.0) + " Milliseconds");
 
-        timer.start();
+        start = System.nanoTime();
         matrix2 = rebuildMatrix(matrix2);
-        timer.stop();
+        end = System.nanoTime();
         System.out.println("Rebuilding Matrix 2");
-        System.out.println(timer.toString());
+        System.out.println((double) ((end - start) / 1000000.0) + " Milliseconds");
         System.out.println();
 
-        timer.start();
+        start = System.nanoTime();
         matrixProductDQ = divNCon(matrix1, matrix2);
-        timer.stop();
+        end = System.nanoTime();
 
         //Cleans up product matrix into its original size
         if (matrixSize != matrix1.length)
@@ -101,7 +103,7 @@ public class MatrixMulti
 
         //prints out Naive Divide and Conquer Algorithm
         System.out.println("Naive Divide and Conquer");
-        System.out.println(timer.toString());
+        System.out.println((double) ((end - start) / 1000000.0) + " Milliseconds");
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductDQ);
         System.out.println();
@@ -109,9 +111,9 @@ public class MatrixMulti
 
         /** Strassen's Algorithm **/
         //calculation for multiplying first and second matrix
-        timer.start();
+        start = System.nanoTime();
         matrixProductStrassen = strassen(matrix1, matrix2);
-        timer.stop();
+        end = System.nanoTime();
 
         //Cleans up product matrix into its original size
         if (matrixSize != matrix1.length)
@@ -121,7 +123,7 @@ public class MatrixMulti
 
         //prints product of matrix
         System.out.println("Strassen's Algorithm");
-        System.out.println(timer.toString());
+        System.out.println((double) ((end - start) / 1000000.0) + " Milliseconds");
         System.out.println("Product of Matrix 1 and Matrix 2");
         //printMatrix(matrixProductStrassen);
         System.out.println();
