@@ -51,12 +51,12 @@ public class MatrixMulti
 
         //prints out the first matrix
         System.out.println("Matrix 1");
-        printMatrix(matrix1);
+        //printMatrix(matrix1);
         System.out.println();
 
         //prints out the second matrix
         System.out.println("Matrix 2");
-        printMatrix(matrix2);
+        //printMatrix(matrix2);
         System.out.println();
 
 
@@ -70,7 +70,7 @@ public class MatrixMulti
         System.out.println("Brute Force Algorithm");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductBF);
+        //printMatrix(matrixProductBF);
         System.out.println();
 
 
@@ -103,7 +103,7 @@ public class MatrixMulti
         System.out.println("Naive Divide and Conquer");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductDQ);
+        //printMatrix(matrixProductDQ);
         System.out.println();
 
 
@@ -123,7 +123,7 @@ public class MatrixMulti
         System.out.println("Strassen's Algorithm");
         System.out.println(timer.toString());
         System.out.println("Product of Matrix 1 and Matrix 2");
-        printMatrix(matrixProductStrassen);
+        //printMatrix(matrixProductStrassen);
         System.out.println();
     }
 
