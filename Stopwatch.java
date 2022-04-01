@@ -1,5 +1,3 @@
-//Stopwatch class provided by EdHurtig
-
 public class Stopwatch {
     private boolean running;
     private boolean paused;
@@ -45,27 +43,6 @@ public class Stopwatch {
             end = System.nanoTime();
             running = false;
             return end - start;
-        }
-    }
-
-    //Pauses Stopwatch
-    public long pause() {
-        if (!isRunning()) {
-            return -1;
-        } else if (isPaused()) {
-            return (pausedStart - start);
-        } else {
-            pausedStart = System.nanoTime();
-            paused = true;
-            return (pausedStart - start);
-        }
-    }
-
-    //Resumes from pause
-    public void resume() {
-        if (isPaused() && isRunning()) {
-            start = System.nanoTime() - (pausedStart - start);
-            paused = false;
         }
     }
 
